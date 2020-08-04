@@ -35,8 +35,7 @@ class RawYoutubePlayer extends StatefulWidget {
   _MobileYoutubePlayerState createState() => _MobileYoutubePlayerState();
 }
 
-class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
-    with WidgetsBindingObserver {
+class _MobileYoutubePlayerState extends State<RawYoutubePlayer> {
   YoutubePlayerController controller;
   InAppWebViewController _webController;
   PlayerState _cachedPlayerState;
@@ -47,32 +46,6 @@ class _MobileYoutubePlayerState extends State<RawYoutubePlayer>
   void initState() {
     super.initState();
     controller = widget.controller;
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    switch (state) {
-      case AppLifecycleState.resumed:
-        if (_cachedPlayerState != null &&
-            _cachedPlayerState == PlayerState.playing) {
-          controller?.play();
-        }
-        break;
-      case AppLifecycleState.inactive:
-        break;
-      case AppLifecycleState.paused:
-        _cachedPlayerState = controller.value.playerState;
-        controller?.pause();
-        break;
-      default:
-    }
   }
 
   @override
